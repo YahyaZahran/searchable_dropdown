@@ -533,14 +533,16 @@ class DropdownSearchState<T> extends State<DropdownSearch<T>> {
   RelativeRect _position(RenderBox popupButtonObject, RenderBox overlay) {
     // Calculate the show-up area for the dropdown using button's size & position based on the `overlay` used as the coordinate space.
 
+    final screenHeight = MediaQuery.sizeOf(context).height;
+    double y = popupButtonObject.localToGlobal(Offset.zero).dy +
+        popupButtonObject.size.height;
+    var left = popupButtonObject.size.bottomLeft;
+    var right = popupButtonObject.size.bottomRight;
+
     return RelativeRect.fromSize(
       Rect.fromPoints(
-        popupButtonObject.localToGlobal(
-            popupButtonObject.size.bottomLeft(Offset.zero),
-            ancestor: overlay),
-        popupButtonObject.localToGlobal(
-            popupButtonObject.size.bottomRight(Offset.zero),
-            ancestor: overlay),
+        popupButtonObject.localToGlobal(left(Offset.zero), ancestor: overlay),
+        popupButtonObject.localToGlobal(right(Offset.zero), ancestor: overlay),
       ),
       Size(overlay.size.width, overlay.size.height),
     );

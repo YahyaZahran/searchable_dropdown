@@ -65,11 +65,12 @@ class _PopupMenuRouteLayout extends SingleChildLayoutDelegate {
     // Find the ideal vertical position.
     double y = position.top;
     // check if we are in the bottom
-    if (y + childSize.height > size.height - keyBoardHeight) {
-      y = size.height - childSize.height - keyBoardHeight;
+    if (y + 310 > size.height - keyBoardHeight) {
+      y -= childSize.height - keyBoardHeight + 50;
     }
+    final offset = Offset(x, y);
 
-    return Offset(x, y);
+    return offset;
   }
 
   @override
