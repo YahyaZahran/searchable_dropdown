@@ -1,3 +1,6 @@
+// ignore: unused_import
+import 'dart:math' as M;
+
 import 'package:flutter/material.dart';
 
 import '../properties/menu_props.dart';
@@ -64,13 +67,22 @@ class _PopupMenuRouteLayout extends SingleChildLayoutDelegate {
 
     // Find the ideal vertical position.
     double y = position.top;
-    // check if we are in the bottom
-    if (y + 310 > size.height - keyBoardHeight) {
-      y -= childSize.height - keyBoardHeight + 50;
-    }
-    final offset = Offset(x, y);
 
-    return offset;
+    if (y + 310 > size.height - keyBoardHeight) {
+      final keyboardStart = size.height - keyBoardHeight;
+      final popEnd = y - 60;
+
+      double intersection = 0;
+      if (popEnd > keyboardStart) intersection = popEnd - keyboardStart;
+
+      final newOffset = y - childSize.height - intersection - 60;
+      if (newOffset > 20) return Offset(x, newOffset);
+    }
+    if (y + childSize.height > size.height - keyBoardHeight) {
+      y = size.height - childSize.height - keyBoardHeight;
+    }
+
+    return Offset(x, y);
   }
 
   @override
